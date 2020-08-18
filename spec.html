@@ -26184,7 +26184,6 @@
         <emu-alg>
           1. Let _to_ be ? ToObject(_target_).
           1. If only one argument was passed, return _to_.
-          1. Let _sources_ be the List of argument values starting with the second argument.
           1. For each element _nextSource_ of _sources_, in ascending index order, do
             1. If _nextSource_ is neither *undefined* nor *null*, then
               1. Let _from_ be ! ToObject(_nextSource_).
@@ -26780,7 +26779,6 @@
         <emu-alg>
           1. Let _Target_ be the *this* value.
           1. If IsCallable(_Target_) is *false*, throw a *TypeError* exception.
-          1. Let _args_ be a new (possibly empty) List consisting of all of the argument values provided after _thisArg_ in order.
           1. Let _F_ be ? BoundFunctionCreate(_Target_, _thisArg_, _args_).
           1. Let _targetHasLength_ be ? HasOwnProperty(_Target_, *"length"*).
           1. If _targetHasLength_ is *true*, then
@@ -26810,10 +26808,8 @@
         <emu-alg>
           1. Let _func_ be the *this* value.
           1. If IsCallable(_func_) is *false*, throw a *TypeError* exception.
-          1. Let _argList_ be a new empty List.
-          1. If this method was called with more than one argument, then in left to right order, starting with the second argument, append each argument as the last element of _argList_.
           1. Perform PrepareForTailCall().
-          1. [id="step-function-proto-call-call"] Return ? Call(_func_, _thisArg_, _argList_).
+          1. [id="step-function-proto-call-call"] Return ? Call(_func_, _thisArg_, _args_).
         </emu-alg>
         <emu-note>
           <p>The _thisArg_ value is passed without modification as the *this* value. This is a change from Edition 3, where an *undefined* or *null* _thisArg_ is replaced with the global object and ToObject is applied to all other values and that result is passed as the *this* value. Even though the _thisArg_ is passed without modification, non-strict functions still perform these transformations upon entry to the function.</p>
@@ -33830,7 +33826,6 @@ THH:mm:ss.sss
           1. Let _proto_ be ? GetPrototypeFromConstructor(_newTarget_, *"%Array.prototype%"*).
           1. Let _array_ be ? ArrayCreate(_numberOfArgs_, _proto_).
           1. Let _k_ be 0.
-          1. Let _items_ be a zero-origined List containing the argument items in order.
           1. Repeat, while _k_ &lt; _numberOfArgs_,
             1. Let _Pk_ be ! ToString(_k_).
             1. Let _itemK_ be _items_[_k_].
@@ -33921,8 +33916,7 @@ THH:mm:ss.sss
         <h1>Array.of ( ..._items_ )</h1>
         <p>When the `of` method is called with any number of arguments, the following steps are taken:</p>
         <emu-alg>
-          1. Let _len_ be the actual number of arguments passed to this function.
-          1. Let _items_ be the List of arguments passed to this function.
+          1. Let _len_ be the number of elements in _items_.
           1. Let _C_ be the *this* value.
           1. If IsConstructor(_C_) is *true*, then
             1. Let _A_ be ? Construct(_C_, &laquo; _len_ &raquo;).
@@ -34929,7 +34923,6 @@ THH:mm:ss.sss
               1. Perform ? CreateDataPropertyOrThrow(_A_, ! ToString(_k_), _fromValue_).
             1. Set _k_ to _k_ + 1.
           1. Perform ? Set(_A_, *"length"*, _actualDeleteCount_, *true*).
-          1. Let _items_ be a List whose elements are, in left to right order, the portion of the actual argument list starting with the third argument. The list is empty if fewer than three arguments were passed.
           1. Let _itemCount_ be the number of elements in _items_.
           1. If _itemCount_ &lt; _actualDeleteCount_, then
             1. Set _k_ to _actualStart_.
@@ -35537,8 +35530,7 @@ THH:mm:ss.sss
         <h1>%TypedArray%.of ( ..._items_ )</h1>
         <p>When the `of` method is called with any number of arguments, the following steps are taken:</p>
         <emu-alg>
-          1. Let _len_ be the actual number of arguments passed to this function.
-          1. Let _items_ be the List of arguments passed to this function.
+          1. Let _len_ be the number of elements in _items_.
           1. Let _C_ be the *this* value.
           1. If IsConstructor(_C_) is *false*, throw a *TypeError* exception.
           1. Let _newObj_ be ? TypedArrayCreate(_C_, &laquo; _len_ &raquo;).
